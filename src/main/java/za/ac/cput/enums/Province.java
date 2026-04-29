@@ -1,0 +1,11 @@
+public enum Province {
+    GAUTENG,
+    KWAZULU_NATAL,
+    WESTERN_CAPE,
+    EASTERN_CAPE,
+    FREE_STATE,
+    LIMPOPO,
+    MPUMALANGA,
+    NORTH_WEST,
+    NORTHERN_CAPE
+}
