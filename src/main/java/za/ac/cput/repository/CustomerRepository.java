@@ -1,3 +1,5 @@
+package za.ac.cput.repository;
+
 import com.buzzcar.sales.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

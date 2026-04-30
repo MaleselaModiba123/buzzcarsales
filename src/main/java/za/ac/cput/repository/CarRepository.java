@@ -1,3 +1,5 @@
+package za.ac.cput.repository;
+
 import com.buzzcar.sales.entity.Car;
 import com.buzzcar.sales.enums.CarStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
