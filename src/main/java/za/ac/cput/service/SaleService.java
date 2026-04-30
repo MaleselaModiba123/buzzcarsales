@@ -13,47 +13,37 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SaleService {
     private final SaleRepository saleRepository;
-    @Autowired
-    public SaleService(SaleRepository saleRepository) {
-        this.saleRepository = saleRepository;
-    }
+    private final SmsSenderService smsSenderService;
 
-    @Override
+
     public Sale read(Integer id) {
         return saleRepository.findById(id).orElseThrow(() -> new RuntimeException("Sale not found with id: " + id));
     }
 
-    @Override
     public Sale save(Sale sale) {
         return saleRepository.save(sale);
     }
 
-    @Override
     public Page<Sale> getAll(Pageable pageable) {
         return saleRepository.findAll(pageable);
     }
 
-    @Override
     public Optional<Sale> getById(Integer id) {
         return saleRepository.findById(id);
     }
 
-    @Override
     public List<Sale> getByCustomerId(Integer customerId) {
         return saleRepository.findByCustomer_CustomerId(customerId);
     }
 
-    @Override
     public List<Sale> getByBranch (Integer branchId) {
         return saleRepository.findByBranch_BranchId(branchId);
     }
 
-    @Override
     public List<Sale> getByEmployeeId(Integer employeeId) {
         return saleRepository.findByEmployee_EmployeeId(employeeId);
     }
 
-    @Override
     public Sale update(Integer id, Sale updated) {
         return saleRepository.findById(id).map(existing -> {
             existing.setSaleDate(updated.getSaleDate());
@@ -66,7 +56,6 @@ public class SaleService {
         }).orElseThrow(() -> new RuntimeException("Sale not found with id: " + id));
     }
 
-    @Override
     public void delete(Integer id) {
         saleRepository.deleteById(id);
     }

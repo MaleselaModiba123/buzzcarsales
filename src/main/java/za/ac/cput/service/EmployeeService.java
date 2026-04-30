@@ -14,37 +14,30 @@ import java.util.Optional;
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
-    @Autowired
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
-    @Override
     public Employee read(Integer id) {
         return employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
     }
 
-     @Override
     public Employee save(Employee employee) {
         return employeeRepository.save(employee);
     }
 
-    @Override
     public Page<Employee> getAll(Pageable pageable) {
         return employeeRepository.findAll(pageable);
     }
 
-    @Override
     public Optional<Employee> getById(Integer id) {
         return employeeRepository.findById(id);
     }
 
-    @Override
     public List<Employee> getByBranch(Integer branchId) {
         return employeeRepository.findByBranch_BranchId(branchId);
     }
 
-    @Override
     public Employee update(Integer id, Employee updated) {
         return employeeRepository.findById(id).map(existing -> {
             existing.setFirstName(updated.getFirstName());
@@ -59,7 +52,6 @@ public class EmployeeService {
         }).orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
     }
 
-    @Override
     public void delete(Integer id) {
         employeeRepository.deleteById(id);
     }

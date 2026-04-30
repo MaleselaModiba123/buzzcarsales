@@ -12,33 +12,23 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
-
-    @Autowired
-    public CustomerService(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
-
-     @Override  
+  
     public Customer save(Customer customer) {
         return customerRepository.save(customer);
     }
 
-    @Override
     public Customer read(Integer id) {
         return customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
     }
 
-    @Override
     public Page<Customer> getAll(Pageable pageable) {
         return customerRepository.findAll(pageable);
     }
 
-    @Override
     public Optional<Customer> getById(Integer id) {
         return customerRepository.findById(id);
     }
 
-    @Override
     public Customer update(Integer id, Customer updated) {
         return customerRepository.findById(id).map(existing -> {
             existing.setFirstName(updated.getFirstName());
@@ -53,7 +43,6 @@ public class CustomerService {
         }).orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
     }
 
-    @Override
     public void delete(Integer id) {
         customerRepository.deleteById(id);
     }

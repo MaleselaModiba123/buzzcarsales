@@ -9,8 +9,7 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>buzzcarsales</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,33 +19,32 @@
 
   <dependencies>
 
-    <!-- Spring Boot Web (REST Controllers) -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
+        <version>2.7.0</version>
     </dependency>
 
-    <!-- Spring Data JPA (database access) -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-data-jpa</artifactId>
+        <version>2.7.0</version>
     </dependency>
 
-    <!-- MySQL Driver -->
     <dependency>
         <groupId>com.mysql</groupId>
         <artifactId>mysql-connector-j</artifactId>
+        <version>8.0.33</version>
         <scope>runtime</scope>
     </dependency>
 
-    <!-- Lombok (reduces boilerplate) -->
     <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
+        <version>1.18.30</version>
         <optional>true</optional>
     </dependency>
 
-    <!-- iTextPDF (PDF report generation) -->
     <dependency>
         <groupId>com.itextpdf</groupId>
         <artifactId>itextpdf</artifactId>

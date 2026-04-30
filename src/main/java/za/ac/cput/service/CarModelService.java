@@ -14,37 +14,26 @@ import java.util.Optional;
 public class CarModelService {
     private final CarModelRepository carModelRepository;
 
-    @Autowired
-    public CarModelService(CarModelRepository carModelRepository) {
-        this.carModelRepository = carModelRepository;
-    }
-
-    @Override
     public CarModel save(CarModel carModel) {
         return carModelRepository.save(carModel);
     }
 
-    @Override
     public CarModel read(Integer id) {
         return carModelRepository.findById(id).orElseThrow(() -> new RuntimeException("CarModel not found with id: " + id));
     }
 
-    @Override
     public Page<CarModel> getAll(Pageable pageable) {
         return carModelRepository.findAll(pageable);
     }
 
-    @Override
     public Optional<CarModel> getById(Integer id) {
         return carModelRepository.findById(id);
     }
 
-    @Override
     public List<CarModel> getByMakeId(Integer makeId) {
         return carModelRepository.findByCarMake_MakeId(makeId);
     }
 
-    @Override
     public CarModel update(Integer id, CarModel updated) {
         return carModelRepository.findById(id).map(existing -> {
             existing.setModelName(updated.getModelName());
@@ -57,7 +46,6 @@ public class CarModelService {
         }).orElseThrow(() -> new RuntimeException("CarModel not found with id: " + id));
     }
     
-    @Override
     public void delete(Integer id) {
         carModelRepository.deleteById(id);
     }

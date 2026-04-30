@@ -1,3 +1,5 @@
+package za.ac.cput.domain;
+
 import com.buzzcar.sales.enums.Province;
 import jakarta.persistence.*;
 import lombok.Data;
