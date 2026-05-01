@@ -1,8 +1,9 @@
 package za.ac.cput.service;
 
-import com.buzzcar.sales.entity.Car;
-import com.buzzcar.sales.enums.CarStatus;
-import com.buzzcar.sales.repository.CarRepository;
+
+import za.ac.cput.domain.Car;
+import za.ac.cput.repository.CarRepository;
+import za.ac.cput.enums.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +33,7 @@ public class CarService {
         return carRepository.findById(id);
     }
 
-    public List<Car> getByStatus(CarStatus status) {
+    public List<Car> getByStatus(Status status) {
         return carRepository.findByStatus(status);
     }
 
@@ -41,11 +42,9 @@ public class CarService {
     }
 
     public Car update(Integer id, Car updated) {
-        return carRepository.findById(id).map(existing -> {
-            existing.setVin(updated.getVin());
+        return (Car) carRepository.findById(id).map(existing -> {
             existing.setYear(updated.getYear());
             existing.setColor(updated.getColor());
-            existing.setMileage(updated.getMileage());
             existing.setStatus(updated.getStatus());
             existing.setCarModel(updated.getCarModel());
             existing.setBranch(updated.getBranch());

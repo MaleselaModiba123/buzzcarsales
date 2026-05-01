@@ -1,7 +1,9 @@
 package za.ac.cput.service;
 
-import com.buzzcar.sales.entity.Supplier;
-import com.buzzcar.sales.repository.SupplierRepository;
+import za.ac.cput.domain.Supplier;
+import za.ac.cput.repository.SupplierRepository;
+import za.ac.cput.repository.CarRepository;
+import za.ac.cput.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,8 +1,11 @@
 package za.ac.cput.controller;
 
-import com.buzzcar.sales.entity.Customer;
-import com.buzzcar.sales.service.CustomerService;
+import za.ac.cput.domain.Customer;
+import za.ac.cput.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -39,10 +42,8 @@ public class CustomerController {
     }
 
     @GetMapping("/getByIdNumber/{idNumber}")
-    public ResponseEntity<Customer> getByIdNumber(@PathVariable String idNumber) {
-        return customerService.getByIdNumber(idNumber)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Page<Customer>> getByIdNumber(@PathVariable String idNumber) {
+        return ResponseEntity.ok(customerService.getByIdNumber(idNumber));
     }
 
     @PutMapping("/update/{id}")

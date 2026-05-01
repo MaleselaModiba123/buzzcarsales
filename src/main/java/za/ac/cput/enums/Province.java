@@ -1,3 +1,5 @@
+package za.ac.cput.enums;
+
 public enum Province {
     GAUTENG,
     KWAZULU_NATAL,

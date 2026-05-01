@@ -1,4 +1,5 @@
-import com.buzzcar.sales.enums.JobTitle;
+package za.ac.cput.domain;
+import za.ac.cput.enums.JobTitle;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;

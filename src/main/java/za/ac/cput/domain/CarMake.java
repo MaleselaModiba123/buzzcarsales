@@ -1,3 +1,6 @@
+
+package za.ac.cput.domain;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
@@ -15,4 +18,9 @@ public class CarMake{
 
     @OneToMany(mappedBy = "carMake", cascade = CascadeType.ALL)
     private List<CarModel> carModels;
+
+    public Object getMakeName() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMakeName'");
+    }
 }

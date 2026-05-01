@@ -1,8 +1,7 @@
 package za.ac.cput.controller;
 
-import com.buzzcar.sales.entity.Car;
-import com.buzzcar.sales.enums.CarStatus;
-import com.buzzcar.sales.service.CarService;
+import za.ac.cput.domain.Car;
+import za.ac.cput.service.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,14 +39,10 @@ public class CarController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/getByStatus/{status}")
-    public ResponseEntity<List<Car>> getByStatus(@PathVariable CarStatus status) {
-        return ResponseEntity.ok(carService.getByStatus(status));
-    }
 
     @GetMapping("/getByBranchId/{branchId}")
     public ResponseEntity<List<Car>> getByBranchId(@PathVariable Integer branchId) {
-        return ResponseEntity.ok(carService.getByBranchId(branchId));
+        return ResponseEntity.ok(carService.getByBranch(branchId));
     }
 
     @PutMapping("/update/{id}")

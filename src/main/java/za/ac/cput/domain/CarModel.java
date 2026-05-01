@@ -1,4 +1,6 @@
-import com.buzzcar.sales.enums.*;
+package za.ac.cput.domain;
+
+import za.ac.cput.enums.*;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
@@ -24,7 +26,7 @@ public class CarModel {
     private FuelType fuelType;
 
     @Enumerated(EnumType.STRING)
-    private Transmission transmission;
+    private Gearbox gearbox;
 
     private Integer numDoors;
 

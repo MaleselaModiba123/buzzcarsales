@@ -1,7 +1,8 @@
 package za.ac.cput.service;
 
-import com.buzzcar.sales.entity.Employee;
-import com.buzzcar.sales.repository.EmployeeRepository;
+import za.ac.cput.domain.Employee;
+import za.ac.cput.enums.*;
+import za.ac.cput.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,10 +14,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
-
-    public EmployeeService(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
 
     public Employee read(Integer id) {
         return employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
@@ -42,10 +39,6 @@ public class EmployeeService {
         return employeeRepository.findById(id).map(existing -> {
             existing.setFirstName(updated.getFirstName());
             existing.setLastName(updated.getLastName());
-            existing.setStreetAddress(updated.getStreetAddress());
-            existing.setCity(updated.getCity());
-            existing.setProvince(updated.getProvince());
-            existing.setPostalCode(updated.getPostalCode());
             existing.setPhoneNumber(updated.getPhoneNumber());
             existing.setEmail(updated.getEmail());
             return employeeRepository.save(existing);

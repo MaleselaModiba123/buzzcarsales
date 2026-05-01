@@ -1,7 +1,7 @@
 package za.ac.cput.service;
 
-import com.buzzcar.sales.entity.Branch;
-import com.buzzcar.sales.repository.BranchRepository;
+import za.ac.cput.domain.Branch;
+import za.ac.cput.repository.BranchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +31,7 @@ public class BranchService {
     }
 
     public Branch update(Integer id, Branch updated) {
-        return branchRepository.findById(id).map(existing -> {
+        return (Branch) branchRepository.findById(id).map(existing -> {
             existing.setBranchName(updated.getBranchName());
             existing.setStreetAddress(updated.getStreetAddress());
             existing.setCity(updated.getCity());

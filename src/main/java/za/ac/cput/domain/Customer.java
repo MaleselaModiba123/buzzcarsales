@@ -1,4 +1,5 @@
-import com.buzzcar.sales.enums.Province;
+package za.ac.cput.domain;
+import za.ac.cput.enums.Province;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
@@ -17,6 +18,9 @@ public class Customer{
     private String email;
     private String streetAddress;
     private String city;
+
+    @Column(unique = true, nullable = false)
+    private String idNumber;
 
     @Enumerated(EnumType.STRING)
     private Province province;

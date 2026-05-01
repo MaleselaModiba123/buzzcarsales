@@ -1,16 +1,17 @@
 package za.ac.cput.service;
+
+import za.ac.cput.domain.*;
+import za.ac.cput.enums.*;
 import za.ac.cput.repository.SaleRepository;
 import za.ac.cput.repository.CarRepository;
 import za.ac.cput.repository.EmployeeRepository;
+
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import za.ac.cput.entity.Car;
-import za.ac.cput.entity.Employee;
-import za.ac.cput.entity.Sale;
-import za.ac.cput.enums.CarStatus;
+
 
 import java.io.ByteArrayOutputStream;
 import java.time.format.DateTimeFormatter;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class PdfReportService {
+public class PdfService {
 
     private final SaleRepository saleRepository;
     private final CarRepository carRepository;
@@ -117,7 +118,6 @@ public class PdfReportService {
             String customer = s.getCustomer().getFirstName() + " " + s.getCustomer().getLastName();
             String car = s.getCar().getCarModel().getCarMake().getMakeName() + " "
                     + s.getCar().getCarModel().getModelName();
-            String vin = s.getCar().getVinNumber();
             String employee = s.getEmployee().getFirstName() + " " + s.getEmployee().getLastName();
             String date = s.getSaleDate().format(fmt);
             String price = String.format("%,.2f", s.getSalePrice());
@@ -125,7 +125,6 @@ public class PdfReportService {
             table.addCell(bodyCell(String.valueOf(s.getSaleId()), alt));
             table.addCell(bodyCell(customer, alt));
             table.addCell(bodyCell(car, alt));
-            table.addCell(bodyCell(vin, alt));
             table.addCell(bodyCell(employee, alt));
             table.addCell(bodyCell(date, alt));
             table.addCell(bodyCell(price, alt));
@@ -147,7 +146,7 @@ public class PdfReportService {
 
         addTitleBar(doc, "Buzz Car Sales — Available Cars Report");
 
-        List<Car> cars = carRepository.findByStatus(CarStatus.AVAILABLE);
+        List<Car> cars = carRepository.findByStatus(Status.AVAILABLE);
 
         Paragraph summary = new Paragraph();
         summary.add(new Chunk("Total Available Cars: ", LABEL_FONT));
@@ -183,7 +182,6 @@ public class PdfReportService {
                         + " " + c.getCarModel().getModelName();
                 table.addCell(bodyCell(String.valueOf(c.getCarId()), alt));
                 table.addCell(bodyCell(makeModel, alt));
-                table.addCell(bodyCell(c.getVinNumber(), alt));
                 table.addCell(bodyCell(c.getCondition().name(), alt));
                 table.addCell(bodyCell(String.valueOf(c.getYear()), alt));
                 table.addCell(bodyCell(String.format("%,.2f", c.getPrice()), alt));

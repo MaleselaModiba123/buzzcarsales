@@ -1,7 +1,7 @@
 package za.ac.cput.controller;
 
-import com.buzzcar.sales.entity.Branch;
-import com.buzzcar.sales.service.BranchService;
+import za.ac.cput.domain.Branch;
+import za.ac.cput.service.BranchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

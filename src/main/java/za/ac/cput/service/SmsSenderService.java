@@ -1,10 +1,9 @@
 package za.ac.cput.service;
 
-import za.ac.cput.entity.Customer;
-import za.ac.cput.entity.Sale;
-import za.ac.cput.entity.Sms;
+
+import za.ac.cput.domain.*;
 import za.ac.cput.enums.SmsStatus;
-import za.ac.cput.enums.SmsType;
+import za.ac.cput.repository.SmsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Base64;
 import java.util.Base64.Encoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -22,10 +22,8 @@ import java.net.URISyntaxException;
 @Service
 @RequiredArgsConstructor
 public class SmsSenderService {
-    private final SmsSenderService smsSenderService;
+    private final SmsRepository smsRepository;
 
-    @Value("${sms.api.url}")
-    private String smsApiUrl;
 
     public void sendSaleConfirmation(Sale sale) {
         Customer customer = sale.getCustomer();
@@ -36,14 +34,14 @@ public class SmsSenderService {
                 " has been confirmed. Total: R" + sale.getSalePrice() +
                 ". Thank you for choosing Buzz Car Sales!";
 
-        sendAndLog(customer, sale, message, SmsType.CONFIRMATION);
+        sendAndLog(customer, sale, message);
     }
 
-    private void sendAndLog(Customer customer, Sale sale, String message, SmsType smsType) {
+    private void sendAndLog(Customer customer, Sale sale, String message) {
         SmsStatus smsStatus;
 
         try {
-            String credentials = apiKey + ":" + apiSecret;
+            String credentials = "9d87d9a7-792d-4d1d-9a0f-b998702fc191" + ":" + "a74c482c-b705-4b2b-80a2-d5010a50f31b";
             String base64Credentials = Base64.getUrlEncoder()
                     .encodeToString(credentials.getBytes(StandardCharsets.UTF_8));
 
@@ -78,10 +76,9 @@ public class SmsSenderService {
         log.setSale(sale);
         log.setPhoneNumber(customer.getPhoneNumber());
         log.setMessage(message);
-        log.setSmsType(smsType);
         log.setSentAt(LocalDateTime.now());
         log.setStatus(smsStatus);
 
-        smsService.save(log);
+        smsRepository.save(log);
     }
 }

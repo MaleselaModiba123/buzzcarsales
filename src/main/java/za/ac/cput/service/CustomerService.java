@@ -1,7 +1,7 @@
 package za.ac.cput.service;
 
-import com.buzzcar.sales.entity.Customer;
-import com.buzzcar.sales.repository.CustomerRepository;
+import za.ac.cput.domain.Customer;
+import za.ac.cput.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,13 +30,12 @@ public class CustomerService {
     }
 
     public Customer update(Integer id, Customer updated) {
-        return customerRepository.findById(id).map(existing -> {
+        return (Customer) customerRepository.findById(id).map(existing -> {
             existing.setFirstName(updated.getFirstName());
             existing.setLastName(updated.getLastName());
             existing.setStreetAddress(updated.getStreetAddress());
             existing.setCity(updated.getCity());
             existing.setProvince(updated.getProvince());
-            existing.setPostalCode(updated.getPostalCode());
             existing.setPhoneNumber(updated.getPhoneNumber());
             existing.setEmail(updated.getEmail());
             return customerRepository.save(existing);
@@ -45,6 +44,11 @@ public class CustomerService {
 
     public void delete(Integer id) {
         customerRepository.deleteById(id);
+    }
+
+    public Page getByIdNumber(String idNumber) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getByIdNumber'");
     }
     
 }

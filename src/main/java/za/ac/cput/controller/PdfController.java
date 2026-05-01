@@ -5,22 +5,24 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.http.ResponseEntity.HeadersBuilder;
 import org.springframework.web.bind.annotation.*;
-import za.ac.cput.service.PdfReportService;
+import za.ac.cput.service.PdfService;
 
 @RestController
 @RequestMapping("/api/reports")
 @RequiredArgsConstructor
-public class PdfReportController {
+public class PdfController {
 
-    private final PdfReportService pdfReportService;
+    private final PdfService pdfReportService;
 
     @GetMapping("/sales")
     public ResponseEntity<byte[]> salesReport() throws DocumentException {
         byte[] pdf = pdfReportService.generateSalesReport();
-        return ResponseEntity.ok()
+        return ((BodyBuilder) ((HeadersBuilder) ResponseEntity.ok())
                 .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=sales_report.pdf")
+                        "attachment; filename=sales_report.pdf"))
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdf);
     }

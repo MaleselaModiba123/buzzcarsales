@@ -1,7 +1,8 @@
 package za.ac.cput.controller;
 
-import com.buzzcar.sales.entity.CarMake;
-import com.buzzcar.sales.service.CarMakeService;
+import za.ac.cput.domain.CarMake;
+import za.ac.cput.domain.CarMake;
+import za.ac.cput.service.CarMakeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/carmakes")
 public class CarMakeController {

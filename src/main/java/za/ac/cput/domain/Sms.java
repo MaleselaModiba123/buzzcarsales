@@ -1,5 +1,7 @@
-import com.buzzcar.sales.enums.SmsStatus;
-import com.buzzcar.sales.enums.SmsType;
+
+package za.ac.cput.domain;
+
+import za.ac.cput.enums.*;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -23,8 +25,8 @@ public class Sms{
     private String phoneNumber;
     private String message;
 
-    @Enumerated(EnumType.STRING)
-    private SmsType smsType;
+    private String smsType;
+
 
     private LocalDateTime sentAt;
 

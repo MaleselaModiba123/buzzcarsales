@@ -1,7 +1,7 @@
 package za.ac.cput.service;
 
-import com.buzzcar.sales.entity.CarModel;
-import com.buzzcar.sales.repository.CarModelRepository;
+import za.ac.cput.domain.CarModel;
+import za.ac.cput.repository.CarModelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,21 +31,20 @@ public class CarModelService {
     }
 
     public List<CarModel> getByMakeId(Integer makeId) {
-        return carModelRepository.findByCarMake_MakeId(makeId);
-    }
+    return carModelRepository.findByCarMake_MakeId(makeId);
+}
 
     public CarModel update(Integer id, CarModel updated) {
-        return carModelRepository.findById(id).map(existing -> {
-            existing.setModelName(updated.getModelName());
-            existing.setBodyType(updated.getBodyType());
-            existing.setFuelType(updated.getFuelType());
-            existing.setTransmission(updated.getTransmission());
-            existing.setNumDoors(updated.getNumDoors());
-            existing.setCarMake(updated.getCarMake());
-            return carModelRepository.save(existing);
-        }).orElseThrow(() -> new RuntimeException("CarModel not found with id: " + id));
-    }
-    
+    return carModelRepository.findById(id).map(existing -> {
+        existing.setModelName(updated.getModelName());
+        existing.setCarMake(updated.getCarMake());
+        existing.setBodyType(updated.getBodyType());
+        existing.setFuelType(updated.getFuelType());
+        existing.setGearbox(updated.getGearbox());
+        existing.setNumDoors(updated.getNumDoors());
+        return carModelRepository.save(existing);
+    }).orElseThrow(() -> new RuntimeException("CarModel not found with id: " + id));
+}
     public void delete(Integer id) {
         carModelRepository.deleteById(id);
     }

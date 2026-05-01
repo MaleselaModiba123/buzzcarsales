@@ -1,7 +1,7 @@
 package za.ac.cput.service;
 
-import com.buzzcar.sales.entity.Sms;
-import com.buzzcar.sales.repository.SmsRepository;
+import za.ac.cput.domain.Sms;
+import za.ac.cput.repository.SmsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,9 +12,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class SmsService {
-    private final SmsRepository smsRepository;
+    private static final SmsRepository smsRepository = null;
 
-    public Sms save(Sms sms) {
+    public static Sms save(Sms sms) {
         return smsRepository.save(sms);
     }
 

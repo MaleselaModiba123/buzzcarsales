@@ -1,7 +1,7 @@
 package za.ac.cput.service;
 
-import com.buzzcar.sales.entity.Sale;
-import com.buzzcar.sales.repository.SaleRepository;
+import za.ac.cput.domain.*;
+import za.ac.cput.repository.SaleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +21,9 @@ public class SaleService {
     }
 
     public Sale save(Sale sale) {
-        return saleRepository.save(sale);
+        Sale saved = saleRepository.save(sale);
+        smsSenderService.sendSaleConfirmation(saved);
+        return saved;
     }
 
     public Page<Sale> getAll(Pageable pageable) {

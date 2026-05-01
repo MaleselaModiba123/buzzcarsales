@@ -1,4 +1,6 @@
-import com.buzzcar.sales.enums.PaymentMethod;
+package za.ac.cput.domain;
+
+import za.ac.cput.enums.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
@@ -28,12 +30,14 @@ public class Sale{
     @JoinColumn(name = "branch_id", nullable = false)
     private Branch branch;
 
+    @Column(name = "date")
     private LocalDate saleDate;
+
     private Double salePrice;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
-    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
-    private List<Sms> smsList;
+    // @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
+    // private List<Sms> smsList;
 }

@@ -1,13 +1,13 @@
 package za.ac.cput.repository;
 
-import com.buzzcar.sales.entity.Car;
-import com.buzzcar.sales.enums.CarStatus;
+import za.ac.cput.domain.Car;
+import za.ac.cput.enums.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Integer> {
-    List<Car> findByStatus(CarStatus status);
     List<Car> findByBranch_BranchId(Integer branchId);
+    List<Car> findByStatus(Status status);
 }

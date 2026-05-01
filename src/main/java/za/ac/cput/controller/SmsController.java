@@ -1,7 +1,7 @@
 package za.ac.cput.controller;
 
-import com.buzzcar.sales.entity.Sms;
-import com.buzzcar.sales.service.SmsService;
+import za.ac.cput.domain.Sms;
+import za.ac.cput.service.SmsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,7 +47,7 @@ public class SmsController {
 
     @GetMapping("/bySaleId/{saleId}")
     public ResponseEntity<List<Sms>> getBySaleId(@PathVariable Integer saleId) {
-        return ResponseEntity.ok(smsService.getBySaleId(saleId));
+        return ResponseEntity.ok(smsService.getBySale(saleId));
     }
 
     @DeleteMapping("/delete/{id}")
