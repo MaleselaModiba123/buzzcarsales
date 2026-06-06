@@ -33,13 +33,6 @@ public class SmsController {
         return ResponseEntity.ok(smsService.getAll(pageable));
     }
 
-    @GetMapping("/getById/{id}")
-    public ResponseEntity<Sms> getById(@PathVariable Integer id) {
-        return smsService.getById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @GetMapping("/getByCustomerId/{customerId}")
     public ResponseEntity<List<Sms>> getByCustomerId(@PathVariable Integer customerId) {
         return ResponseEntity.ok(smsService.getByCustomerId(customerId));

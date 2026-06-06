@@ -2,6 +2,7 @@ package za.ac.cput.controller;
 
 import za.ac.cput.domain.Car;
 import za.ac.cput.service.CarService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,7 @@ public class CarController {
     private final CarService carService;
 
     @PostMapping("/create")
-    public ResponseEntity<Car> create(@RequestBody Car car) {
+    public ResponseEntity<Car> create(@Valid @RequestBody Car car) {
         return ResponseEntity.ok(carService.save(car));
     }
 
@@ -32,21 +33,13 @@ public class CarController {
         return ResponseEntity.ok(carService.getAll(pageable));
     }
 
-    @GetMapping("/getById/{id}")
-    public ResponseEntity<Car> getById(@PathVariable Integer id) {
-        return carService.getById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-
     @GetMapping("/getByBranchId/{branchId}")
     public ResponseEntity<List<Car>> getByBranchId(@PathVariable Integer branchId) {
         return ResponseEntity.ok(carService.getByBranch(branchId));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Car> update(@PathVariable Integer id, @RequestBody Car car) {
+    public ResponseEntity<Car> update(@PathVariable Integer id, @Valid @RequestBody Car car) {
         return ResponseEntity.ok(carService.update(id, car));
     }
 

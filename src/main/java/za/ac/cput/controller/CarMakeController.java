@@ -1,14 +1,13 @@
 package za.ac.cput.controller;
 
 import za.ac.cput.domain.CarMake;
-import za.ac.cput.domain.CarMake;
 import za.ac.cput.service.CarMakeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,7 +16,7 @@ public class CarMakeController {
     private final CarMakeService carMakeService;
 
     @PostMapping("/create")
-    public ResponseEntity<CarMake> create(@RequestBody CarMake carMake) {
+    public ResponseEntity<CarMake> create(@Valid @RequestBody CarMake carMake) {
         return ResponseEntity.ok(carMakeService.save(carMake));
     }
 
@@ -33,18 +32,11 @@ public class CarMakeController {
         return ResponseEntity.ok(carMakeService.getAll(pageable));
     }
 
-    @GetMapping("/getById/{id}")
-    public ResponseEntity<CarMake> getById(@PathVariable Integer id) {
-        return carMakeService.getById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @PutMapping("/update/{id}")
-    public ResponseEntity<CarMake> update(@PathVariable Integer id, @RequestBody CarMake carMake) {
+    public ResponseEntity<CarMake> update(@PathVariable Integer id, @Valid @RequestBody CarMake carMake) {
         return ResponseEntity.ok(carMakeService.update(id, carMake));
     }
-    
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         carMakeService.delete(id);

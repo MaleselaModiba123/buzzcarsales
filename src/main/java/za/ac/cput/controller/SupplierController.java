@@ -2,6 +2,7 @@ package za.ac.cput.controller;
 
 import za.ac.cput.domain.Supplier;
 import za.ac.cput.service.SupplierService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,12 +16,12 @@ public class SupplierController {
     private final SupplierService supplierService;
 
     @PostMapping("/create")
-    public ResponseEntity<Supplier> create(@RequestBody Supplier supplier) {
+    public ResponseEntity<Supplier> create(@Valid @RequestBody Supplier supplier) {
         return ResponseEntity.ok(supplierService.save(supplier));
     }
 
     @GetMapping("/read/{id}")
-    public ResponseEntity<Supplier> read(@PathVariable Integer id) {    
+    public ResponseEntity<Supplier> read(@PathVariable Integer id) {
         return supplierService.getById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -31,15 +32,8 @@ public class SupplierController {
         return ResponseEntity.ok(supplierService.getAll(pageable));
     }
 
-    @GetMapping("/getById/{id}")
-    public ResponseEntity<Supplier> getById(@PathVariable Integer id) {
-        return supplierService.getById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @PutMapping("/update/{id}")
-    public ResponseEntity<Supplier> update(@PathVariable Integer id, @RequestBody Supplier supplier) {
+    public ResponseEntity<Supplier> update(@PathVariable Integer id, @Valid @RequestBody Supplier supplier) {
         return ResponseEntity.ok(supplierService.update(id, supplier));
     }
 

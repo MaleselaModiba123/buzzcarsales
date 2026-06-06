@@ -2,6 +2,7 @@ package za.ac.cput.controller;
 
 import za.ac.cput.domain.Branch;
 import za.ac.cput.service.BranchService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,7 @@ public class BranchController {
     private final BranchService branchService;
 
     @PostMapping("/create")
-    public ResponseEntity<Branch> create(@RequestBody Branch branch) {
+    public ResponseEntity<Branch> create(@Valid @RequestBody Branch branch) {
         return ResponseEntity.ok(branchService.save(branch));
     }
 
@@ -31,15 +32,8 @@ public class BranchController {
         return ResponseEntity.ok(branchService.getAll(pageable));
     }
 
-    @GetMapping("/getById/{id}")
-    public ResponseEntity<Branch> getById(@PathVariable Integer id) {
-        return branchService.getById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @PutMapping("/update/{id}")
-    public ResponseEntity<Branch> update(@PathVariable Integer id, @RequestBody Branch branch) {
+    public ResponseEntity<Branch> update(@PathVariable Integer id, @Valid @RequestBody Branch branch) {
         return ResponseEntity.ok(branchService.update(id, branch));
     }
 
@@ -48,5 +42,5 @@ public class BranchController {
         branchService.delete(id);
         return ResponseEntity.noContent().build();
     }
-    
+
 }

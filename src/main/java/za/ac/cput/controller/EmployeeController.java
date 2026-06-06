@@ -2,13 +2,14 @@ package za.ac.cput.controller;
 
 import za.ac.cput.domain.*;
 import za.ac.cput.service.EmployeeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/employees")
@@ -17,7 +18,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping("/create")
-    public ResponseEntity<Employee> create(@RequestBody Employee employee) {
+    public ResponseEntity<Employee> create(@Valid @RequestBody Employee employee) {
         return ResponseEntity.ok(employeeService.save(employee));
     }
 
@@ -33,20 +34,13 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getAll(pageable));
     }
 
-    @GetMapping("/getById/{id}")
-    public ResponseEntity<Employee> getById(@PathVariable Integer id) {
-        return employeeService.getById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @GetMapping("/getByBranchId/{branchId}")
+    public ResponseEntity<List<Employee>> getByBranchId(@PathVariable Integer branchId) {
+        return ResponseEntity.ok(employeeService.getByBranch(branchId));
     }
 
-    // @GetMapping("/getByEmail/{email}")
-    // public ResponseEntity<Page<Employee>> getByEmail(@PathVariable String email) {
-    //     return ResponseEntity.ok(employeeService.getByEmail(email));
-    // }
-
     @PutMapping("/update/{id}")
-    public ResponseEntity<Employee> update(@PathVariable Integer id, @RequestBody Employee employee) {
+    public ResponseEntity<Employee> update(@PathVariable Integer id, @Valid @RequestBody Employee employee) {
         return ResponseEntity.ok(employeeService.update(id, employee));
     }
 
