@@ -58,10 +58,11 @@ public class SaleService {
         return saleRepository.findById(id).map(existing -> {
             existing.setSaleDate(updated.getSaleDate());
             existing.setSalePrice(updated.getSalePrice());
+            existing.setPaymentMethod(updated.getPaymentMethod());
+            existing.setCar(updated.getCar());
             existing.setCustomer(updated.getCustomer());
             existing.setEmployee(updated.getEmployee());
             existing.setBranch(updated.getBranch());
-            existing.setCar(updated.getCar());
             return saleRepository.save(existing);
         }).orElseThrow(() -> new ResourceNotFoundException("Sale", id));
     }

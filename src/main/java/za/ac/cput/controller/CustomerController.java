@@ -1,10 +1,11 @@
 package za.ac.cput.controller;
 
-import za.ac.cput.domain.Customer;
+import za.ac.cput.dto.request.CustomerRequest;
+import za.ac.cput.dto.response.CustomerResponse;
+import za.ac.cput.mapper.CustomerMapper;
 import za.ac.cput.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -15,32 +16,34 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CustomerController {
     private final CustomerService customerService;
+    private final CustomerMapper customerMapper;
 
     @PostMapping("/create")
-    public ResponseEntity<Customer> create(@Valid @RequestBody Customer customer) {
-        return ResponseEntity.ok(customerService.save(customer));
+    public ResponseEntity<CustomerResponse> create(@Valid @RequestBody CustomerRequest request) {
+        return ResponseEntity.ok(customerMapper.toResponse(customerService.save(customerMapper.toEntity(request))));
     }
 
     @GetMapping("/read/{id}")
-    public ResponseEntity<Customer> read(@PathVariable Integer id) {
+    public ResponseEntity<CustomerResponse> read(@PathVariable Integer id) {
         return customerService.getById(id)
+                .map(customerMapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<Page<Customer>> getAll(Pageable pageable) {
-        return ResponseEntity.ok(customerService.getAll(pageable));
+    public ResponseEntity<Page<CustomerResponse>> getAll(Pageable pageable) {
+        return ResponseEntity.ok(customerService.getAll(pageable).map(customerMapper::toResponse));
     }
 
     @GetMapping("/getByIdNumber/{idNumber}")
-    public ResponseEntity<Customer> getByIdNumber(@PathVariable String idNumber) {
-        return ResponseEntity.ok(customerService.getByIdNumber(idNumber));
+    public ResponseEntity<CustomerResponse> getByIdNumber(@PathVariable String idNumber) {
+        return ResponseEntity.ok(customerMapper.toResponse(customerService.getByIdNumber(idNumber)));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Customer> update(@PathVariable Integer id, @Valid @RequestBody Customer customer) {
-        return ResponseEntity.ok(customerService.update(id, customer));
+    public ResponseEntity<CustomerResponse> update(@PathVariable Integer id, @Valid @RequestBody CustomerRequest request) {
+        return ResponseEntity.ok(customerMapper.toResponse(customerService.update(id, customerMapper.toEntity(request))));
     }
 
     @DeleteMapping("/delete/{id}")

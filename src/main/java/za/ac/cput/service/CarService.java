@@ -49,11 +49,16 @@ public class CarService {
     @Transactional
     public Car update(Integer id, Car updated) {
         return carRepository.findById(id).map(existing -> {
-            existing.setYear(updated.getYear());
+            existing.setVinNumber(updated.getVinNumber());
+            existing.setMileage(updated.getMileage());
             existing.setColor(updated.getColor());
+            existing.setYear(updated.getYear());
+            existing.setPrice(updated.getPrice());
+            existing.setCondition(updated.getCondition());
             existing.setStatus(updated.getStatus());
             existing.setCarModel(updated.getCarModel());
             existing.setBranch(updated.getBranch());
+            existing.setSupplier(updated.getSupplier());
             return carRepository.save(existing);
         }).orElseThrow(() -> new ResourceNotFoundException("Car", id));
     }

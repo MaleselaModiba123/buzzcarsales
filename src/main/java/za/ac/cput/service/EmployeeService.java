@@ -44,8 +44,12 @@ public class EmployeeService {
         return employeeRepository.findById(id).map(existing -> {
             existing.setFirstName(updated.getFirstName());
             existing.setLastName(updated.getLastName());
+            existing.setIdNumber(updated.getIdNumber());
             existing.setPhoneNumber(updated.getPhoneNumber());
             existing.setEmail(updated.getEmail());
+            existing.setJobTitle(updated.getJobTitle());
+            existing.setHireDate(updated.getHireDate());
+            existing.setBranch(updated.getBranch());
             return employeeRepository.save(existing);
         }).orElseThrow(() -> new ResourceNotFoundException("Employee", id));
     }

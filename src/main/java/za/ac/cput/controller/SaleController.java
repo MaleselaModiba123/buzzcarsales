@@ -1,6 +1,8 @@
 package za.ac.cput.controller;
 
-import za.ac.cput.domain.Sale;
+import za.ac.cput.dto.request.SaleRequest;
+import za.ac.cput.dto.response.SaleResponse;
+import za.ac.cput.mapper.SaleMapper;
 import za.ac.cput.service.SaleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,42 +18,44 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SaleController {
     private final SaleService saleService;
+    private final SaleMapper saleMapper;
 
     @PostMapping("/create")
-    public ResponseEntity<Sale> create(@Valid @RequestBody Sale sale) {
-        return ResponseEntity.ok(saleService.save(sale));
+    public ResponseEntity<SaleResponse> create(@Valid @RequestBody SaleRequest request) {
+        return ResponseEntity.ok(saleMapper.toResponse(saleService.save(saleMapper.toEntity(request))));
     }
 
     @GetMapping("/read/{id}")
-    public ResponseEntity<Sale> read(@PathVariable Integer id) {
+    public ResponseEntity<SaleResponse> read(@PathVariable Integer id) {
         return saleService.getById(id)
+                .map(saleMapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<Page<Sale>> getAll(Pageable pageable) {
-        return ResponseEntity.ok(saleService.getAll(pageable));
+    public ResponseEntity<Page<SaleResponse>> getAll(Pageable pageable) {
+        return ResponseEntity.ok(saleService.getAll(pageable).map(saleMapper::toResponse));
     }
 
     @GetMapping("/getByCustomerId/{customerId}")
-    public ResponseEntity<List<Sale>> getByCustomerId(@PathVariable Integer customerId) {
-        return ResponseEntity.ok(saleService.getByCustomerId(customerId));
+    public ResponseEntity<List<SaleResponse>> getByCustomerId(@PathVariable Integer customerId) {
+        return ResponseEntity.ok(saleService.getByCustomerId(customerId).stream().map(saleMapper::toResponse).toList());
     }
 
     @GetMapping("/getByBranchId/{branchId}")
-    public ResponseEntity<List<Sale>> getByBranchId(@PathVariable Integer branchId) {
-        return ResponseEntity.ok(saleService.getByBranch(branchId));
+    public ResponseEntity<List<SaleResponse>> getByBranchId(@PathVariable Integer branchId) {
+        return ResponseEntity.ok(saleService.getByBranch(branchId).stream().map(saleMapper::toResponse).toList());
     }
 
     @GetMapping("/getByEmployeeId/{employeeId}")
-    public ResponseEntity<List<Sale>> getByEmployeeId(@PathVariable Integer employeeId) {
-        return ResponseEntity.ok(saleService.getByEmployeeId(employeeId));
+    public ResponseEntity<List<SaleResponse>> getByEmployeeId(@PathVariable Integer employeeId) {
+        return ResponseEntity.ok(saleService.getByEmployeeId(employeeId).stream().map(saleMapper::toResponse).toList());
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Sale> update(@PathVariable Integer id, @Valid @RequestBody Sale sale) {
-        return ResponseEntity.ok(saleService.update(id, sale));
+    public ResponseEntity<SaleResponse> update(@PathVariable Integer id, @Valid @RequestBody SaleRequest request) {
+        return ResponseEntity.ok(saleMapper.toResponse(saleService.update(id, saleMapper.toEntity(request))));
     }
 
     @DeleteMapping("/delete/{id}")

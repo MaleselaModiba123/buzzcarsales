@@ -1,6 +1,8 @@
 package za.ac.cput.controller;
 
-import za.ac.cput.domain.Car;
+import za.ac.cput.dto.request.CarRequest;
+import za.ac.cput.dto.response.CarResponse;
+import za.ac.cput.mapper.CarMapper;
 import za.ac.cput.service.CarService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,32 +17,34 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarController {
     private final CarService carService;
+    private final CarMapper carMapper;
 
     @PostMapping("/create")
-    public ResponseEntity<Car> create(@Valid @RequestBody Car car) {
-        return ResponseEntity.ok(carService.save(car));
+    public ResponseEntity<CarResponse> create(@Valid @RequestBody CarRequest request) {
+        return ResponseEntity.ok(carMapper.toResponse(carService.save(carMapper.toEntity(request))));
     }
 
     @GetMapping("/read/{id}")
-    public ResponseEntity<Car> read(@PathVariable Integer id) {
+    public ResponseEntity<CarResponse> read(@PathVariable Integer id) {
         return carService.getById(id)
+                .map(carMapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<Page<Car>> getAll(Pageable pageable) {
-        return ResponseEntity.ok(carService.getAll(pageable));
+    public ResponseEntity<Page<CarResponse>> getAll(Pageable pageable) {
+        return ResponseEntity.ok(carService.getAll(pageable).map(carMapper::toResponse));
     }
 
     @GetMapping("/getByBranchId/{branchId}")
-    public ResponseEntity<List<Car>> getByBranchId(@PathVariable Integer branchId) {
-        return ResponseEntity.ok(carService.getByBranch(branchId));
+    public ResponseEntity<List<CarResponse>> getByBranchId(@PathVariable Integer branchId) {
+        return ResponseEntity.ok(carService.getByBranch(branchId).stream().map(carMapper::toResponse).toList());
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Car> update(@PathVariable Integer id, @Valid @RequestBody Car car) {
-        return ResponseEntity.ok(carService.update(id, car));
+    public ResponseEntity<CarResponse> update(@PathVariable Integer id, @Valid @RequestBody CarRequest request) {
+        return ResponseEntity.ok(carMapper.toResponse(carService.update(id, carMapper.toEntity(request))));
     }
 
     @DeleteMapping("/delete/{id}")

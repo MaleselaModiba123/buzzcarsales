@@ -39,11 +39,12 @@ public class CustomerService {
         return customerRepository.findById(id).map(existing -> {
             existing.setFirstName(updated.getFirstName());
             existing.setLastName(updated.getLastName());
-            existing.setStreetAddress(updated.getStreetAddress());
-            existing.setCity(updated.getCity());
-            existing.setProvince(updated.getProvince());
             existing.setPhoneNumber(updated.getPhoneNumber());
             existing.setEmail(updated.getEmail());
+            existing.setStreetAddress(updated.getStreetAddress());
+            existing.setCity(updated.getCity());
+            existing.setIdNumber(updated.getIdNumber());
+            existing.setProvince(updated.getProvince());
             return customerRepository.save(existing);
         }).orElseThrow(() -> new ResourceNotFoundException("Customer", id));
     }

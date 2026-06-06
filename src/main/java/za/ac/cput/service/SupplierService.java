@@ -33,12 +33,13 @@ public class SupplierService {
     public Supplier update(Integer id, Supplier updated) {
         return supplierRepository.findById(id).map(existing -> {
             existing.setSupplierName(updated.getSupplierName());
+            existing.setContactPerson(updated.getContactPerson());
+            existing.setPhoneNumber(updated.getPhoneNumber());
+            existing.setEmail(updated.getEmail());
             existing.setStreetAddress(updated.getStreetAddress());
             existing.setCity(updated.getCity());
             existing.setProvince(updated.getProvince());
             existing.setPostalCode(updated.getPostalCode());
-            existing.setPhoneNumber(updated.getPhoneNumber());
-            existing.setEmail(updated.getEmail());
             return supplierRepository.save(existing);
         }).orElseThrow(() -> new ResourceNotFoundException("Supplier", id));
     }

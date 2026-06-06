@@ -1,6 +1,8 @@
 package za.ac.cput.controller;
 
-import za.ac.cput.domain.CarModel;
+import za.ac.cput.dto.request.CarModelRequest;
+import za.ac.cput.dto.response.CarModelResponse;
+import za.ac.cput.mapper.CarModelMapper;
 import za.ac.cput.service.CarModelService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,32 +17,34 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarModelController {
     private final CarModelService carModelService;
+    private final CarModelMapper carModelMapper;
 
     @PostMapping("/create")
-    public ResponseEntity<CarModel> create(@Valid @RequestBody CarModel carModel) {
-        return ResponseEntity.ok(carModelService.save(carModel));
+    public ResponseEntity<CarModelResponse> create(@Valid @RequestBody CarModelRequest request) {
+        return ResponseEntity.ok(carModelMapper.toResponse(carModelService.save(carModelMapper.toEntity(request))));
     }
 
     @GetMapping("/read/{id}")
-    public ResponseEntity<CarModel> read(@PathVariable Integer id) {
+    public ResponseEntity<CarModelResponse> read(@PathVariable Integer id) {
         return carModelService.getById(id)
+                .map(carModelMapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<Page<CarModel>> getAll(Pageable pageable) {
-        return ResponseEntity.ok(carModelService.getAll(pageable));
+    public ResponseEntity<Page<CarModelResponse>> getAll(Pageable pageable) {
+        return ResponseEntity.ok(carModelService.getAll(pageable).map(carModelMapper::toResponse));
     }
 
     @GetMapping("/getByMakeId/{makeId}")
-    public ResponseEntity<List<CarModel>> getByMakeId(@PathVariable Integer makeId) {
-        return ResponseEntity.ok(carModelService.getByMakeId(makeId));
+    public ResponseEntity<List<CarModelResponse>> getByMakeId(@PathVariable Integer makeId) {
+        return ResponseEntity.ok(carModelService.getByMakeId(makeId).stream().map(carModelMapper::toResponse).toList());
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<CarModel> update(@PathVariable Integer id, @Valid @RequestBody CarModel carModel) {
-        return ResponseEntity.ok(carModelService.update(id, carModel));
+    public ResponseEntity<CarModelResponse> update(@PathVariable Integer id, @Valid @RequestBody CarModelRequest request) {
+        return ResponseEntity.ok(carModelMapper.toResponse(carModelService.update(id, carModelMapper.toEntity(request))));
     }
 
     @DeleteMapping("/delete/{id}")
