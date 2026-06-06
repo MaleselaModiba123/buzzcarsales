@@ -4,7 +4,6 @@ import za.ac.cput.domain.*;
 import za.ac.cput.enums.*;
 import za.ac.cput.repository.SaleRepository;
 import za.ac.cput.repository.CarRepository;
-import za.ac.cput.repository.EmployeeRepository;
 
 
 import com.itextpdf.text.*;
@@ -25,7 +24,6 @@ public class PdfService {
 
     private final SaleRepository saleRepository;
     private final CarRepository carRepository;
-    private final EmployeeRepository employeeRepository;
 
     //PDF styling constants
     private static final Font TITLE_FONT =
@@ -118,6 +116,7 @@ public class PdfService {
             String customer = s.getCustomer().getFirstName() + " " + s.getCustomer().getLastName();
             String car = s.getCar().getCarModel().getCarMake().getMakeName() + " "
                     + s.getCar().getCarModel().getModelName();
+            String vin = s.getCar().getVinNumber();
             String employee = s.getEmployee().getFirstName() + " " + s.getEmployee().getLastName();
             String date = s.getSaleDate().format(fmt);
             String price = String.format("%,.2f", s.getSalePrice());
@@ -125,6 +124,7 @@ public class PdfService {
             table.addCell(bodyCell(String.valueOf(s.getSaleId()), alt));
             table.addCell(bodyCell(customer, alt));
             table.addCell(bodyCell(car, alt));
+            table.addCell(bodyCell(vin, alt));
             table.addCell(bodyCell(employee, alt));
             table.addCell(bodyCell(date, alt));
             table.addCell(bodyCell(price, alt));
@@ -182,6 +182,7 @@ public class PdfService {
                         + " " + c.getCarModel().getModelName();
                 table.addCell(bodyCell(String.valueOf(c.getCarId()), alt));
                 table.addCell(bodyCell(makeModel, alt));
+                table.addCell(bodyCell(c.getVinNumber(), alt));
                 table.addCell(bodyCell(c.getCondition().name(), alt));
                 table.addCell(bodyCell(String.valueOf(c.getYear()), alt));
                 table.addCell(bodyCell(String.format("%,.2f", c.getPrice()), alt));

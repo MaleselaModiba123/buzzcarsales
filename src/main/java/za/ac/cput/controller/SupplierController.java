@@ -1,7 +1,10 @@
 package za.ac.cput.controller;
 
-import za.ac.cput.domain.Supplier;
+import za.ac.cput.dto.request.SupplierRequest;
+import za.ac.cput.dto.response.SupplierResponse;
+import za.ac.cput.mapper.SupplierMapper;
 import za.ac.cput.service.SupplierService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,34 +16,29 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class SupplierController {
     private final SupplierService supplierService;
+    private final SupplierMapper supplierMapper;
 
     @PostMapping("/create")
-    public ResponseEntity<Supplier> create(@RequestBody Supplier supplier) {
-        return ResponseEntity.ok(supplierService.save(supplier));
+    public ResponseEntity<SupplierResponse> create(@Valid @RequestBody SupplierRequest request) {
+        return ResponseEntity.ok(supplierMapper.toResponse(supplierService.save(supplierMapper.toEntity(request))));
     }
 
     @GetMapping("/read/{id}")
-    public ResponseEntity<Supplier> read(@PathVariable Integer id) {    
+    public ResponseEntity<SupplierResponse> read(@PathVariable Integer id) {
         return supplierService.getById(id)
+                .map(supplierMapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<Page<Supplier>> getAll(Pageable pageable) {
-        return ResponseEntity.ok(supplierService.getAll(pageable));
-    }
-
-    @GetMapping("/getById/{id}")
-    public ResponseEntity<Supplier> getById(@PathVariable Integer id) {
-        return supplierService.getById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Page<SupplierResponse>> getAll(Pageable pageable) {
+        return ResponseEntity.ok(supplierService.getAll(pageable).map(supplierMapper::toResponse));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Supplier> update(@PathVariable Integer id, @RequestBody Supplier supplier) {
-        return ResponseEntity.ok(supplierService.update(id, supplier));
+    public ResponseEntity<SupplierResponse> update(@PathVariable Integer id, @Valid @RequestBody SupplierRequest request) {
+        return ResponseEntity.ok(supplierMapper.toResponse(supplierService.update(id, supplierMapper.toEntity(request))));
     }
 
     @DeleteMapping("/delete/{id}")
