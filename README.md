@@ -42,9 +42,14 @@ The defaults in `application.properties` are for local development only.
 ## Build & Run
 
 ```bash
-mvn test          # run the test suite (uses in-memory H2)
+mvn test          # unit + slice tests (in-memory H2, no database needed)
 mvn spring-boot:run   # start the API on http://localhost:8080
 ```
+
+### Tests
+
+- `mvn test` / `mvn verify` — runs the unit and web-slice tests against in-memory H2. Fast, no external services.
+- `mvn verify -Pit` — additionally runs the **MySQL integration test** (`*IT`), which builds the schema on a real MySQL and exercises every derived query. Requires a reachable MySQL; connection is configurable via `IT_DB_URL`, `IT_DB_USERNAME`, `IT_DB_PASSWORD` (defaults to a local server, using a dedicated `buzz_car_sales_it` database). CI runs this against a MySQL service container.
 
 ## API Documentation
 

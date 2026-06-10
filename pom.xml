@@ -130,4 +130,34 @@
         </plugins>
     </build>
 
+    <profiles>
+        <!--
+          Integration tests (*IT) run against a real MySQL and are OFF by default
+          so `mvn test` / `mvn verify` stay fast and need no database.
+          Enable with `mvn verify -Pit` (CI provides a MySQL service container).
+        -->
+        <profile>
+            <id>it</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <argLine>-Dnet.bytebuddy.experimental=true</argLine>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
