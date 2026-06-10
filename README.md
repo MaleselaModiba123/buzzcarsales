@@ -1,5 +1,7 @@
 # Buzz Car Sales System
 
+[![CI](https://github.com/MaleselaModiba123/buzzcarsales/actions/workflows/ci.yml/badge.svg)](https://github.com/MaleselaModiba123/buzzcarsales/actions/workflows/ci.yml)
+
 A Spring Boot REST API for managing a multi-branch car dealership franchise across South Africa.
 
 ---
