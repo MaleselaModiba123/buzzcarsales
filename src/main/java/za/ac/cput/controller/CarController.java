@@ -4,6 +4,7 @@ import za.ac.cput.dto.request.CarRequest;
 import za.ac.cput.dto.response.CarResponse;
 import za.ac.cput.mapper.CarMapper;
 import za.ac.cput.service.CarService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@Tag(name = "Cars", description = "Vehicle inventory across branches")
 @RestController
 @RequestMapping("/cars")
 @RequiredArgsConstructor

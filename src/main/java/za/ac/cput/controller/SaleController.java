@@ -5,6 +5,7 @@ import za.ac.cput.dto.response.SaleResponse;
 import za.ac.cput.mapper.SaleMapper;
 import za.ac.cput.service.SaleService;
 import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+@Tag(name = "Sales", description = "Sale transactions (each triggers an SMS confirmation)")
 @RestController
 @RequestMapping("/sales")
 @RequiredArgsConstructor

@@ -47,6 +47,13 @@ mvn test          # run the test suite (uses in-memory H2)
 mvn spring-boot:run   # start the API on http://localhost:8080
 ```
 
+## API Documentation
+
+Once running, interactive API docs (Swagger UI) are available at:
+
+- **Swagger UI:** http://localhost:8080/swagger-ui.html
+- **OpenAPI spec (JSON):** http://localhost:8080/v3/api-docs
+
 ---
 
 ## Project ERD

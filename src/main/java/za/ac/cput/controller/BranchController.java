@@ -5,12 +5,14 @@ import za.ac.cput.dto.response.BranchResponse;
 import za.ac.cput.mapper.BranchMapper;
 import za.ac.cput.service.BranchService;
 import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Branches", description = "Dealership branches")
 @RestController
 @RequestMapping("/branches")
 @RequiredArgsConstructor

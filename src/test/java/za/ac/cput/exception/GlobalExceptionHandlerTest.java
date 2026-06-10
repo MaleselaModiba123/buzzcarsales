@@ -30,14 +30,21 @@ class GlobalExceptionHandlerTest {
         assertThat(response.getBody().get("message").toString()).contains("Car").contains("5");
     }
 
+    /** A real method whose parameter backs a real MethodParameter (no concrete-class mock). */
+    @SuppressWarnings("unused")
+    private void sample(String arg) {
+    }
+
     @Test
-    void validation_maps400_withFieldErrors() {
+    void validation_maps400_withFieldErrors() throws Exception {
         BindingResult bindingResult = mock(BindingResult.class);
         when(bindingResult.getFieldErrors()).thenReturn(List.of(
                 new FieldError("carRequest", "vinNumber", "vinNumber is required"),
                 new FieldError("carRequest", "modelId", "modelId is required")));
+        MethodParameter parameter = new MethodParameter(
+                getClass().getDeclaredMethod("sample", String.class), 0);
         MethodArgumentNotValidException ex =
-                new MethodArgumentNotValidException(mock(MethodParameter.class), bindingResult);
+                new MethodArgumentNotValidException(parameter, bindingResult);
 
         ResponseEntity<Map<String, Object>> response = handler.handleValidation(ex);
 

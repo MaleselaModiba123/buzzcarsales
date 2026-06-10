@@ -5,12 +5,14 @@ import za.ac.cput.dto.response.CarMakeResponse;
 import za.ac.cput.mapper.CarMakeMapper;
 import za.ac.cput.service.CarMakeService;
 import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Car Makes", description = "Vehicle manufacturers")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/carmakes")

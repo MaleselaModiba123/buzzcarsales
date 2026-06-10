@@ -5,6 +5,7 @@ import za.ac.cput.dto.response.EmployeeResponse;
 import za.ac.cput.mapper.EmployeeMapper;
 import za.ac.cput.service.EmployeeService;
 import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@Tag(name = "Employees", description = "Branch staff")
 @RestController
 @RequestMapping("/employees")
 @RequiredArgsConstructor
