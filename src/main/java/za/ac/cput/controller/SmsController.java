@@ -5,6 +5,7 @@ import za.ac.cput.dto.response.SmsResponse;
 import za.ac.cput.mapper.SmsMapper;
 import za.ac.cput.service.SmsService;
 import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@Tag(name = "SMS", description = "SMS message log")
 @RestController
 @RequestMapping("/sms")
 @RequiredArgsConstructor
