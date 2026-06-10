@@ -36,9 +36,6 @@ The defaults in `application.properties` are for local development only.
 | `SMSPORTAL_API_SECRET` | SMSPortal API secret | _(empty)_ |
 | `SMSPORTAL_API_URL` | SMSPortal endpoint | `https://rest.smsportal.com/BulkMessages` |
 
-> ⚠️ The SMSPortal key/secret that were previously committed to this repository
-> have been removed from the source. They are exposed in the git history and
-> **must be rotated** in the SMSPortal dashboard.
 
 ## Build & Run
 
